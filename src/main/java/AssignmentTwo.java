@@ -150,12 +150,81 @@ public class AssignmentTwo {
     }
 
     public void partFive() {
-        // Code for part five
+        // Create a Ride object
+        Employee operator = new Employee("Alice", 30, "456 Park Lane", "E003", "Ride Operator");
+        Ride rollerCoaster = new Ride("Roller Coaster", 10, operator);
+        rollerCoaster.setMaxRider(4); // Set maximum riders per cycle
+
+        // Create Visitors and add them to the queue
+        for (int i = 1; i <= 10; i++) {
+            Visitor visitor = new Visitor("Visitor" + i, 20 + i, "Address" + i, "T00" + i, true);
+            rollerCoaster.addVisitorToQueue(visitor);
+        }
+
+        // Print all visitors in the queue
+        System.out.println("Visitors in the queue before running the ride:");
+        rollerCoaster.printQueue();
+
+        // Run one cycle of the ride
+        rollerCoaster.runOneCycle();
+
+        // Print all visitors in the queue after running the ride
+        System.out.println("Visitors in the queue after running one cycle:");
+        rollerCoaster.printQueue();
+
+        // Print all visitors in the ride history
+        System.out.println("Visitors in the ride history:");
+        rollerCoaster.printRideHistory();
+        /**
+         * Visitors in the queue before running the ride:
+         * - Visitor1
+         * - Visitor2
+         * - Visitor3
+         * ...
+         * Running one cycle of the ride...
+         * Ride cycle completed. Number of cycles run: 1
+         * Visitors in the queue after running one cycle:
+         * - Visitor5
+         * - Visitor6
+         * ...
+         * Visitors in the ride history:
+         * - Visitor1
+         * - Visitor2
+         * ...
+         */
     }
 
+
     public void partSix() {
-        // Code for part six
+        Ride ferrisWheel = new Ride("Ferris Wheel", 8, null);
+
+        // Add some visitors to the ride history
+        ferrisWheel.addVisitorToHistory(new Visitor("Anna", 25, "Street 1", "T101", true));
+        ferrisWheel.addVisitorToHistory(new Visitor("Ben", 28, "Street 2", "T102", true));
+        ferrisWheel.addVisitorToHistory(new Visitor("Clara", 22, "Street 3", "T103", true));
+
+        // Export the ride history to a CSV file
+        ferrisWheel.exportToCSV("ride_history.csv");
+
+        // Clear the ride history
+        ferrisWheel.getRideHistory().clear();
+
+        // Import the ride history back from the CSV file
+        ferrisWheel.importFromCSV("ride_history.csv");
+
+        // Print the imported ride history
+        System.out.println("Imported ride history:");
+        ferrisWheel.printRideHistory();
+        /**
+         * Ride history exported to ride_history.csv
+         * Ride history imported from ride_history.csv
+         * Imported ride history:
+         * - Anna
+         * - Ben
+         * - Clara
+         */
     }
+
 
     public void partSeven() {
         // Code for part seven

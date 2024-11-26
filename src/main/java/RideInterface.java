@@ -10,4 +10,6 @@ public interface RideInterface {
     int numberOfVisitors(); // Return the number of visitors in ride history
     void printRideHistory(); // Print the ride history
     void sortRideHistory();
+    void exportToCSV(String filename);
+    void importFromCSV(String filename);
 }

@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 public class Ride implements RideInterface {
@@ -6,6 +7,7 @@ public class Ride implements RideInterface {
     private Employee operator;
     private Queue<Visitor> queue; // Queue of waiting visitors
     private LinkedList<Visitor> rideHistory; // LinkedList for visitors who took the ride    private int maxRider; // Maximum number of visitors per cycle
+    private int maxRider; // Maximum number of visitors per cycle
     private int numOfCycles; // Number of times the ride has been run
 
     // Default Constructor
@@ -15,12 +17,14 @@ public class Ride implements RideInterface {
     }
 
     // Parameterized Constructor
-    public Ride(String rideName, int capacity, Employee operator) {
-        this.rideName = rideName;
-        this.capacity = capacity;
+    public Ride(String name, int duration, Employee operator) {
+        this.rideName = name;
+        this.capacity = duration;
         this.operator = operator;
         this.queue = new LinkedList<>();
         this.rideHistory = new LinkedList<>();
+        this.maxRider = 5; // Default max riders per cycle
+        this.numOfCycles = 0; // Initial number of cycles
     }
 
     // Getters and Setters
@@ -42,6 +46,38 @@ public class Ride implements RideInterface {
 
     public Employee getOperator() {
         return operator;
+    }
+
+    public Queue<Visitor> getQueue() {
+        return queue;
+    }
+
+    public void setQueue(Queue<Visitor> queue) {
+        this.queue = queue;
+    }
+
+    public LinkedList<Visitor> getRideHistory() {
+        return rideHistory;
+    }
+
+    public void setRideHistory(LinkedList<Visitor> rideHistory) {
+        this.rideHistory = rideHistory;
+    }
+
+    public int getMaxRider() {
+        return maxRider;
+    }
+
+    public void setMaxRider(int maxRider) {
+        this.maxRider = maxRider;
+    }
+
+    public int getNumOfCycles() {
+        return numOfCycles;
+    }
+
+    public void setNumOfCycles(int numOfCycles) {
+        this.numOfCycles = numOfCycles;
     }
 
     public void setOperator(Employee operator) {
@@ -76,13 +112,26 @@ public class Ride implements RideInterface {
 
     @Override
     public void runOneCycle() {
-        System.out.println("Running one cycle of " + rideName);
-        for (int i = 0; i < capacity && !queue.isEmpty(); i++) {
-            Visitor visitor = queue.poll();
-            System.out.println(visitor.getName() + " is enjoying the ride " + rideName);
-            addVisitorToHistory(visitor);
+        if (operator == null) {
+            System.out.println("Cannot run the ride: No operator assigned.");
+            return;
         }
+
+        if (queue.isEmpty()) {
+            System.out.println("Cannot run the ride: No visitors in the queue.");
+            return;
+        }
+
+        System.out.println("Running one cycle of the ride...");
+        int riders = Math.min(maxRider, queue.size()); // Determine the number of riders for this cycle
+        for (int i = 0; i < riders; i++) {
+            Visitor visitor = queue.poll(); // Remove from queue
+            addVisitorToHistory(visitor); // Add to history
+        }
+        numOfCycles++;
+        System.out.println("Ride cycle completed. Number of cycles run: " + numOfCycles);
     }
+
 
     @Override
     public void addVisitorToHistory(Visitor visitor) {
@@ -115,6 +164,38 @@ public class Ride implements RideInterface {
         } else {
             Collections.sort(rideHistory, new VisitorComparator());
             System.out.println("Ride history sorted successfully.");
+        }
+    }
+
+    @Override
+    public void exportToCSV(String filename) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            for (Visitor visitor : rideHistory) {
+                StringJoiner joiner = new StringJoiner(",");
+                joiner.add(visitor.getName())
+                        .add(String.valueOf(visitor.getAge()))
+                        .add(visitor.getAddress())
+                        .add(visitor.getTicketNumber());
+                writer.println(joiner.toString());
+            }
+            System.out.println("Ride history exported to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error exporting ride history: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void importFromCSV(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                Visitor visitor = new Visitor(data[0], Integer.parseInt(data[1]), data[2], data[3], Boolean.parseBoolean(data[4]));
+                addVisitorToHistory(visitor);
+            }
+            System.out.println("Ride history imported from " + filename);
+        } catch (IOException e) {
+            System.out.println("Error importing ride history: " + e.getMessage());
         }
     }
 
