@@ -5,12 +5,13 @@ public class Ride implements RideInterface {
     private int capacity;
     private Employee operator;
     private Queue<Visitor> queue; // Queue of waiting visitors
-    private List<Visitor> rideHistory; // List of visitors who have taken the ride
+    private LinkedList<Visitor> rideHistory; // LinkedList for visitors who took the ride    private int maxRider; // Maximum number of visitors per cycle
+    private int numOfCycles; // Number of times the ride has been run
 
     // Default Constructor
     public Ride() {
         this.queue = new LinkedList<>();
-        this.rideHistory = new ArrayList<>();
+        this.rideHistory = new LinkedList<>();
     }
 
     // Parameterized Constructor
@@ -19,7 +20,7 @@ public class Ride implements RideInterface {
         this.capacity = capacity;
         this.operator = operator;
         this.queue = new LinkedList<>();
-        this.rideHistory = new ArrayList<>();
+        this.rideHistory = new LinkedList<>();
     }
 
     // Getters and Setters
