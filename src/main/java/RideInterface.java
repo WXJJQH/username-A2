@@ -12,4 +12,6 @@ public interface RideInterface {
     void sortRideHistory();
     void exportToCSV(String filename);
     void importFromCSV(String filename);
+    void importRideHistory(String filename);
+    int getRideHistorySize();
 }

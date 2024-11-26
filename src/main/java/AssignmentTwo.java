@@ -227,6 +227,27 @@ public class AssignmentTwo {
 
 
     public void partSeven() {
-        // Code for part seven
+        // Create a new Ride
+        Employee operator = new Employee("John Doe", 35, "456 Park Lane", "E001", "Operator");
+        Ride rollerCoaster = new Ride("Roller Coaster", 5, operator);
+
+        // Import ride history from the file
+        String filename = "ride_history.csv";
+        rollerCoaster.importRideHistory(filename);
+
+        // Print the number of visitors in the ride history
+        System.out.println("Number of visitors in the ride history: " + rollerCoaster.getRideHistorySize());
+
+        // Print all visitors in the ride history
+        rollerCoaster.printRideHistory();
+        /**
+         * Ride history successfully imported from ride_history.csv
+         * Number of visitors in the ride history: 5
+         * Visitor{name='Alice', age=25, address='123 Main St', ticketNumber='T001', hasPaid=true}
+         * Visitor{name='Bob', age=30, address='456 Elm St', ticketNumber='T002', hasPaid=true}
+         * Visitor{name='Charlie', age=28, address='789 Pine St', ticketNumber='T003', hasPaid=true}
+         * Visitor{name='Diana', age=22, address='101 Oak St', ticketNumber='T004', hasPaid=true}
+         * Visitor{name='Eve', age=29, address='202 Maple St', ticketNumber='T005', hasPaid=true}
+         */
     }
 }

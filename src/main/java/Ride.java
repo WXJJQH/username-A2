@@ -151,11 +151,15 @@ public class Ride implements RideInterface {
 
     @Override
     public void printRideHistory() {
-        System.out.println("Ride history for " + rideName + ":");
-        for (Visitor visitor : rideHistory) {
-            System.out.println("- " + visitor.getName());
+        if (rideHistory.isEmpty()) {
+            System.out.println("No visitors in the ride history.");
+        } else {
+            for (Visitor visitor : rideHistory) {
+                System.out.println(visitor);
+            }
         }
     }
+
 
     @Override
     public void sortRideHistory() {
@@ -198,6 +202,42 @@ public class Ride implements RideInterface {
             System.out.println("Error importing ride history: " + e.getMessage());
         }
     }
+
+    @Override
+// Import ride history from a file
+    public void importRideHistory(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 5) {
+                    String name = data[0];
+                    int age = Integer.parseInt(data[1]);
+                    String address = data[2];
+                    String ticketNumber = data[3];
+                    boolean hasPaid = Boolean.parseBoolean(data[4]);
+
+                    // Create a Visitor object and add it to the ride history
+                    Visitor visitor = new Visitor(name, age, address, ticketNumber, hasPaid);
+                    rideHistory.add(visitor);
+                } else {
+                    System.err.println("Invalid data format: " + line);
+                }
+            }
+            System.out.println("Ride history successfully imported from " + filename);
+        } catch (IOException e) {
+            System.err.println("Error reading from file: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing data from file: " + e.getMessage());
+        }
+    }
+
+    @Override
+// Get the number of visitors in the ride history
+    public int getRideHistorySize() {
+        return rideHistory.size();
+    }
+
 
 
 }
