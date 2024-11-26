@@ -104,7 +104,49 @@ public class AssignmentTwo {
 
 
     public void partFourB() {
-        // Code for part four (B)
+        // Create a Ride object
+        Employee operator = new Employee("Bob", 35, "321 Theme Park Lane", "E002", "Ride Operator");
+        Ride ferrisWheel = new Ride("Ferris Wheel", 5, operator);
+
+        // Create Visitor objects
+        Visitor visitor1 = new Visitor("Sophia", 26, "123 Elm Street", "T005", true);
+        Visitor visitor2 = new Visitor("Emma", 22, "456 Pine Road", "T002", false);
+        Visitor visitor3 = new Visitor("John", 25, "789 Maple Avenue", "T003", true);
+        Visitor visitor4 = new Visitor("Olivia", 24, "101 Oak Street", "T004", false);
+        Visitor visitor5 = new Visitor("Liam", 28, "202 Birch Lane", "T001", true);
+
+        // Add visitors to the ride history
+        ferrisWheel.addVisitorToHistory(visitor1);
+        ferrisWheel.addVisitorToHistory(visitor2);
+        ferrisWheel.addVisitorToHistory(visitor3);
+        ferrisWheel.addVisitorToHistory(visitor4);
+        ferrisWheel.addVisitorToHistory(visitor5);
+
+        // Print the ride history before sorting
+        System.out.println("Ride history before sorting:");
+        ferrisWheel.printRideHistory();
+
+        // Sort the ride history
+        ferrisWheel.sortRideHistory();
+
+        // Print the ride history after sorting
+        System.out.println("Ride history after sorting:");
+        ferrisWheel.printRideHistory();
+        /**
+         * Ride history before sorting:
+         * - Name: Sophia, Ticket: T005
+         * - Name: Emma, Ticket: T002
+         * - Name: John, Ticket: T003
+         * - Name: Olivia, Ticket: T004
+         * - Name: Liam, Ticket: T001
+         * Ride history sorted successfully.
+         * Ride history after sorting:
+         * - Name: Emma, Ticket: T002
+         * - Name: John, Ticket: T003
+         * - Name: Liam, Ticket: T001
+         * - Name: Olivia, Ticket: T004
+         * - Name: Sophia, Ticket: T005
+         */
     }
 
     public void partFive() {

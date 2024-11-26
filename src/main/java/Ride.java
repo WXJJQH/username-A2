@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -109,4 +106,16 @@ public class Ride implements RideInterface {
             System.out.println("- " + visitor.getName());
         }
     }
+
+    @Override
+    public void sortRideHistory() {
+        if (rideHistory.isEmpty()) {
+            System.out.println("The ride history is empty. Nothing to sort.");
+        } else {
+            Collections.sort(rideHistory, new VisitorComparator());
+            System.out.println("Ride history sorted successfully.");
+        }
+    }
+
+
 }

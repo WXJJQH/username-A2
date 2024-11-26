@@ -9,4 +9,5 @@ public interface RideInterface {
     boolean checkVisitorFromHistory(Visitor visitor); // Check if a visitor is in the ride history
     int numberOfVisitors(); // Return the number of visitors in ride history
     void printRideHistory(); // Print the ride history
+    void sortRideHistory();
 }
